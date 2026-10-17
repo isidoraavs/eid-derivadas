@@ -462,4 +462,153 @@ class ComparacionExtremos(Scene):
 
         self.wait(47)
 
+        # ==========================================
+        # 7. CONCLUSION: 39 SEGUNDOS
+        # ==========================================
+
+        self.play(
+            FadeOut(titulo_comparacion),
+            FadeOut(voz_camila_compara),
+            FadeOut(comparacion),
+            FadeOut(interpretacion),
+            run_time=2,
+        )
+
+        voz_isidora_cierre = etiqueta_voz("Isidora Valverde")
+
+        cierre = Paragraph(
+            "Dos sumas pueden diferir porque el punto muestra",
+            "cambia la altura de los rectangulos.",
+            font_size=30,
+            alignment="center",
+        ).move_to(UP * 0.65)
+
+        cierre_2 = Text(
+            "Al refinar la particion, las sumas se relacionan",
+            font_size=23,
+        ).next_to(cierre, DOWN, buff=0.45)
+
+        cierre_3 = Text(
+            "con la integral definida.",
+            font_size=23,
+            color=BLUE_B,
+        ).next_to(cierre_2, DOWN, buff=0.18)
+
+        self.play(
+            Write(cierre),
+            run_time=2,
+        )
+
+        self.play(
+            FadeIn(voz_isidora_cierre),
+            Write(cierre_2),
+            Write(cierre_3),
+            run_time=2,
+        )
+
+        self.wait(31)
+
+        self.play(
+            FadeOut(voz_isidora_cierre),
+            FadeOut(cierre),
+            FadeOut(cierre_2),
+            FadeOut(cierre_3),
+            run_time=2,
+        )
+
+        # ==========================================
+        # 8. CREDITOS Y FUENTES
+        # ==========================================
+
+        url_libretexts = (
+            "https://espanol.libretexts.org/Bookshelves/"
+            "Matematicas/Libro%3A_Calculo_%28OpenStax%29/"
+            "05%3A_Integraci%C3%B3n/"
+            "5.01%3A_Aproximaci%C3%B3n_de_%C3%A1reas"
+        )
+
+        url_khan = (
+            "https://es.khanacademy.org/math/integral-calculus/"
+            "ic-integration/a/left-and-right-riemann-sums"
+        )
+
+        url_manim = (
+            "https://docs.manim.community/en/stable/"
+            "tutorials/quickstart.html"
+        )
+
+        creditos = VGroup(
+            Text(
+                "CREDITOS Y FUENTES",
+                font_size=25,
+                color=BLUE_B,
+            ),
+            Text(
+                "OpenStax / LibreTexts: Aproximacion de areas",
+                font_size=15,
+            ),
+            Text(
+                url_libretexts,
+                font_size=10,
+            ).scale_to_fit_width(12.5),
+            Text(
+                "Khan Academy: Sumas de Riemann izquierda y derecha",
+                font_size=15,
+            ),
+            Text(
+                url_khan,
+                font_size=10,
+            ).scale_to_fit_width(12.5),
+            Text(
+                "Manim Community: Documentacion oficial",
+                font_size=15,
+            ),
+            Text(
+                url_manim,
+                font_size=10,
+            ).scale_to_fit_width(12.5),
+            Text(
+                "Programacion y animaciones: Grupo 2",
+                font_size=15,
+            ),
+        ).arrange(
+            DOWN,
+            buff=0.16,
+        ).scale_to_fit_height(6.5).move_to(ORIGIN)
+
+        self.play(
+            FadeIn(creditos),
+            run_time=2,
+        )
+        self.wait(11)
+        self.play(
+            FadeOut(creditos),
+            run_time=2,
+        )
+
+
+# ==========================================
+# EJECUCION DESDE VISUAL STUDIO CODE
+# ==========================================
+
+if __name__ == "__main__":
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    proyecto = Path(__file__).resolve().parent
+
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "manim",
+            "-pqm",
+            str(Path(__file__).resolve()),
+            "ComparacionExtremos",
+        ],
+        cwd=proyecto,
+        check=True,
+    )
+
        
