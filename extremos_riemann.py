@@ -573,6 +573,17 @@ class ComparacionExtremos(Scene):
             DOWN,
             buff=0.20,
         ).scale_to_fit_height(6.5).move_to(ORIGIN)
+                self.play(
+            FadeIn(creditos),
+            run_time=2,
+        )
+
+        self.wait(11)
+
+        self.play(
+            FadeOut(creditos),
+            run_time=2,
+        )
 
 
 
