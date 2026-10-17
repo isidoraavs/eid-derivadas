@@ -536,7 +536,9 @@ class ComparacionExtremos(Scene):
             "https://docs.manim.community/en/stable/"
             "tutorials/quickstart.html"
         )
+        
 
+        
         creditos = VGroup(
             Text(
                 "CREDITOS Y FUENTES",
@@ -549,42 +551,29 @@ class ComparacionExtremos(Scene):
             ),
             Text(
                 url_libretexts,
-                font_size=10,
-            ).scale_to_fit_width(12.5),
+                font_size=9,
+            ),
             Text(
                 "Khan Academy: Sumas de Riemann izquierda y derecha",
                 font_size=15,
             ),
             Text(
                 url_khan,
-                font_size=10,
-            ).scale_to_fit_width(12.5),
+                font_size=9,
+            ),
             Text(
                 "Manim Community: Documentacion oficial",
                 font_size=15,
             ),
             Text(
                 url_manim,
-                font_size=10,
-            ).scale_to_fit_width(12.5),
-            Text(
-                "Programacion y animaciones: Grupo 2",
-                font_size=15,
+                font_size=9,
             ),
         ).arrange(
             DOWN,
-            buff=0.16,
+            buff=0.20,
         ).scale_to_fit_height(6.5).move_to(ORIGIN)
 
-        self.play(
-            FadeIn(creditos),
-            run_time=2,
-        )
-        self.wait(11)
-        self.play(
-            FadeOut(creditos),
-            run_time=2,
-        )
 
 
 # ==========================================
