@@ -317,4 +317,149 @@ class ComparacionExtremos(Scene):
         )
 
         self.wait(45)
+
+        # ==========================================
+        # 5. SUMA POR EXTREMOS DERECHOS
+        # ==========================================
+
+        voz_isidora = etiqueta_voz("Isidora Valverde")
+
+        derechos, puntos_der = crear_rectangulos(
+            True,
+            ORANGE,
+        )
+
+        encabezado_der = Text(
+            "Extremos derechos",
+            color=ORANGE,
+            font_size=27,
+        ).move_to(encabezado_izq)
+
+        puntos_texto_der = Text(
+            "Puntos muestra: 1, 2, 3, 4",
+            color=ORANGE,
+            font_size=20,
+        ).move_to(puntos_texto_izq)
+
+        suma_der = MathTex(
+            r"S_D=1(2+3+4+5)=14",
+            color=ORANGE,
+            font_size=36,
+        ).move_to(suma_izq)
+
+        self.play(
+            FadeOut(voz_francisca),
+            FadeIn(voz_isidora),
+            FadeOut(izquierdos),
+            FadeOut(puntos_izq),
+            FadeOut(puntos_texto_izq),
+            FadeOut(suma_izq),
+            Transform(encabezado_izq, encabezado_der),
+            FadeIn(derechos),
+            FadeIn(puntos_der),
+            run_time=3,
+        )
+
+        self.bring_to_front(
+            ejes,
+            curva,
+            etiquetas,
+            nombre_funcion,
+            puntos_der,
+        )
+
+        self.play(
+            Write(puntos_texto_der),
+            Write(suma_der),
+            run_time=2,
+        )
+
+        self.wait(47)
+
+        # ==========================================
+        # 6. COMPARACION DE LOS RESULTADOS
+        # ==========================================
+
+        self.play(
+            FadeOut(titulo_grafica),
+            FadeOut(voz_isidora),
+            FadeOut(ejes),
+            FadeOut(etiquetas),
+            FadeOut(curva),
+            FadeOut(nombre_funcion),
+            FadeOut(derechos),
+            FadeOut(puntos_der),
+            FadeOut(encabezado_izq),
+            FadeOut(puntos_texto_der),
+            FadeOut(suma_der),
+            run_time=2,
+        )
+
+        voz_camila_compara = etiqueta_voz("Camila Fuentes")
+
+        titulo_comparacion = Text(
+            "Comparemos los resultados",
+            font_size=30,
+            color=BLUE_B,
+        ).to_edge(UP, buff=0.35)
+
+        comparacion = VGroup(
+            MathTex(
+                r"S_I=10",
+                color=BLUE,
+                font_size=35,
+            ),
+            MathTex(
+                r"\int_0^4 (x+1)\,dx"
+                r"=\left[\frac{x^2}{2}+x\right]_0^4=12",
+                font_size=27,
+            ),
+            MathTex(
+                r"S_D=14",
+                color=ORANGE,
+                font_size=35,
+            ),
+            MathTex(
+                r"10<12<14",
+                font_size=36,
+            ),
+        ).arrange(
+            DOWN,
+            buff=0.22,
+        ).move_to(UP * 0.45)
+
+        interpretacion = VGroup(
+            Text(
+                "Izquierda: subestima el area.",
+                color=BLUE,
+                font_size=22,
+            ),
+            Text(
+                "Derecha: sobreestima el area.",
+                color=ORANGE,
+                font_size=22,
+            ),
+        ).arrange(
+            DOWN,
+            buff=0.12,
+        ).to_edge(DOWN, buff=0.2)
+
+        self.play(
+            Write(titulo_comparacion),
+            FadeIn(voz_camila_compara),
+            run_time=1,
+        )
+
+        self.play(
+            FadeIn(comparacion),
+            run_time=3,
+        )
+
+        self.play(
+            FadeIn(interpretacion),
+            run_time=2,
+        )
+
+        self.wait(47)
+
        
