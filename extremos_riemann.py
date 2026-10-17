@@ -1,148 +1,171 @@
 from manim import *
 
-if __name__ == "__main__":
-    import subprocess
-    import sys
-    from pathlib import Path
 
-    proyecto = Path(__file__).resolve().parent
-    subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "manim",
-            "-pqm",
-            str(Path(__file__).resolve()),
-            "ComparacionExtremos",
-        ],
-        cwd=proyecto,
-        check=True,
-    )
+def etiqueta_voz(nombre):
+    return Text(
+        f"Voz: {nombre}",
+        font_size=16,
+        color=GRAY_B,
+    ).to_corner(UL, buff=0.25)
 
 
 class ComparacionExtremos(Scene):
     def construct(self):
+
+        # ==========================================
+        # 1. PORTADA:
+        # ==========================================
+
+        cabecera = Text(
+            "CALCULO INTERMEDIO | EID 2026",
+            font_size=23,
+            color=BLUE_B,
+        ).to_edge(UP, buff=0.4)
+
         titulo = Text(
-            "Sumas de Riemann: extremos izquierdos y derechos",
-            font_size=34,
-        ).to_edge(UP, buff=0.25)
+            "SUMAS DE RIEMANN",
+            font_size=42,
+            weight=BOLD,
+        ).move_to(UP * 1.65)
 
-        ejes = Axes(
-            x_range=[0, 4, 1],
-            y_range=[0, 6, 1],
-            x_length=7,
-            y_length=4.4,
-            axis_config={"include_numbers": True, "font_size": 24},
-            tips=False,
-        ).shift(UP * 0.25)
-        etiquetas = ejes.get_axis_labels(
-            x_label=MathTex("x", font_size=32),
-            y_label=MathTex("f(x)", font_size=32),
-        )
-        etiquetas[1].shift(DOWN * 0.55)
-        curva = ejes.plot(
-            lambda x: x + 1,
-            x_range=[0, 4],
+        subtitulo = Text(
+            "Extremos izquierdos y derechos",
+            font_size=26,
+            color=BLUE_B,
+        ).next_to(titulo, DOWN, buff=0.25)
+
+        grupo = Text(
+            "GRUPO 2",
+            font_size=24,
             color=YELLOW,
-            stroke_width=4,
+        ).next_to(subtitulo, DOWN, buff=0.35)
+
+        integrantes = VGroup(
+            Text("INTEGRANTES", font_size=21, color=BLUE_B),
+            Text("Camila Fuentes", font_size=20),
+            Text("Francisca Alvarado", font_size=20),
+            Text("Isidora Valverde", font_size=20),
+        ).arrange(
+            DOWN,
+            aligned_edge=LEFT,
+            buff=0.12,
+        ).move_to(LEFT * 3 + DOWN * 1.35)
+
+        fecha = Text(
+            "21/10/2026",
+            font_size=20,
+            color=GRAY_B,
+        ).to_corner(DR, buff=0.4)
+
+        portada = VGroup(
+            cabecera,
+            titulo,
+            subtitulo,
+            grupo,
+            integrantes,
+            fecha,
         )
-        nombre_funcion = MathTex("f(x)=x+1", color=YELLOW, font_size=34)
-        nombre_funcion.next_to(ejes.c2p(4, 5), UR, buff=0.1)
 
-        self.play(Write(titulo))
-        self.play(Create(ejes), Write(etiquetas))
-        self.play(Create(curva), Write(nombre_funcion))
+        self.play(FadeIn(cabecera), run_time=1)
+        self.play(
+            Write(titulo),
+            FadeIn(subtitulo),
+            run_time=2,
+        )
+        self.play(
+            FadeIn(grupo),
+            FadeIn(integrantes),
+            FadeIn(fecha),
+            run_time=2,
+        )
+        self.wait(13)
+        self.play(FadeOut(portada), run_time=2)
 
-        def crear_rectangulos(usando_extremo_derecho, color):
-            rectangulos = VGroup()
-            puntos = VGroup()
-            for i in range(4):
-                x_izq = i
-                x_der = i + 1
-                x_muestra = x_der if usando_extremo_derecho else x_izq
-                altura = x_muestra + 1
+        # ==========================================
+        # 2. PREGUNTA CENTRAl:
+        # ==========================================
 
-                rectangulo = Polygon(
-                    ejes.c2p(x_izq, 0),
-                    ejes.c2p(x_der, 0),
-                    ejes.c2p(x_der, altura),
-                    ejes.c2p(x_izq, altura),
-                    color=color,
-                    stroke_width=2,
-                    fill_color=color,
-                    fill_opacity=0.42,
-                )
-                punto = Dot(
-                    ejes.c2p(x_muestra, altura),
-                    radius=0.065,
-                    color=color,
-                )
-                rectangulos.add(rectangulo)
-                puntos.add(punto)
+        voz_camila = etiqueta_voz("Camila Fuentes")
 
-            return rectangulos, puntos
+        encabezado_pregunta = Text(
+            "PREGUNTA CENTRAL",
+            font_size=25,
+            color=BLUE_B,
+        ).to_edge(UP, buff=0.8)
 
-        izquierdos, puntos_izq = crear_rectangulos(False, BLUE)
-        encabezado_izq = Text(
-            "Altura tomada en el extremo izquierdo",
-            color=BLUE,
-            font_size=27,
-        ).move_to(UP * 2.55)
-        suma_izq = MathTex(
-            r"S_I=1(1+2+3+4)=10",
-            color=BLUE,
-            font_size=40,
-        ).to_edge(DOWN, buff=0.3)
-
-        self.play(FadeIn(izquierdos))
-        self.add(puntos_izq)
-        self.bring_to_front(ejes, curva, etiquetas, nombre_funcion)
-        self.play(Write(encabezado_izq), Write(suma_izq))
-        self.wait(1.5)
-
-        derechos, puntos_der = crear_rectangulos(True, ORANGE)
-        encabezado_der = Text(
-            "Altura tomada en el extremo derecho",
-            color=ORANGE,
-            font_size=27,
-        ).move_to(encabezado_izq)
-        suma_der = MathTex(
-            r"S_D=1(2+3+4+5)=14",
-            color=ORANGE,
-            font_size=40,
-        ).move_to(suma_izq)
+        pregunta = Paragraph(
+            "¿Por qué dos sumas construidas sobre la misma",
+            "partición pueden entregar valores distintos?",
+            font_size=32,
+            alignment="center",
+            line_spacing=0.9,
+        )
 
         self.play(
-            FadeOut(izquierdos),
-            FadeOut(puntos_izq),
-            FadeOut(suma_izq),
-            Transform(encabezado_izq, encabezado_der),
-            FadeIn(derechos),
-            FadeIn(puntos_der),
+            Write(encabezado_pregunta),
+            run_time=1,
         )
-        self.add(encabezado_izq)
-        self.bring_to_front(ejes, curva, etiquetas, nombre_funcion)
-        self.play(Write(suma_der))
-        self.wait(1.5)
+        self.play(
+            FadeIn(voz_camila),
+            FadeIn(pregunta, shift=UP * 0.2),
+            run_time=2,
+        )
+        self.wait(15)
+        self.play(
+            FadeOut(encabezado_pregunta),
+            FadeOut(pregunta),
+            FadeOut(voz_camila),
+            run_time=2,
+        )
 
-        comparacion = VGroup(
+        # ==========================================
+        # 3. TEORIA: 
+        # ==========================================
+
+        voz_francisca = etiqueta_voz("Francisca Alvarado")
+
+        titulo_teoria = Text(
+            "¿Que elementos intervienen?",
+            font_size=31,
+            color=BLUE_B,
+        ).to_edge(UP, buff=0.35)
+
+        conceptos = VGroup(
+            MathTex(r"f(x)=x+1", font_size=34),
+            MathTex(r"[a,b]=[0,4], \qquad n=4", font_size=31),
             MathTex(
-                r"\int_0^4(x+1)\,dx=12",
-                font_size=32,
-            ),
-            MathTex(
-                r"S_I=10<12<S_D=14",
-                font_size=36,
+                r"\Delta x=\frac{b-a}{n}"
+                r"=\frac{4-0}{4}=1",
+                font_size=31,
             ),
             Text(
-                "Con más rectángulos, ambas sumas se acercan al área exacta.",
-                font_size=20,
+                "Particion: 0, 1, 2, 3, 4",
+                font_size=26,
             ),
-        ).arrange(DOWN, buff=0.08).to_edge(DOWN, buff=0.15)
+            MathTex(
+                r"S_n=\sum_{i=1}^{n}"
+                r"f(x_i^*)\,\Delta x",
+                font_size=31,
+            ),
+            Text(
+                "Altura por ancho; despues sumamos las areas.",
+                font_size=22,
+            ),
+        ).arrange(
+            DOWN,
+            buff=0.23,
+        ).scale_to_fit_height(4.8).move_to(DOWN * 0.15)
 
         self.play(
-            FadeOut(suma_der),
-            FadeOut(encabezado_izq),
-            FadeIn(comparacion),
+            FadeIn(voz_francisca),
+            Write(titulo_teoria),
+            run_time=1,
         )
-        self.wait(2)
+        self.play(FadeIn(conceptos), run_time=2)
+        self.wait(40)
+        self.play(
+            FadeOut(voz_francisca),
+            FadeOut(titulo_teoria),
+            FadeOut(conceptos),
+            run_time=2,
+        )
