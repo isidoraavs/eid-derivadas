@@ -17,7 +17,7 @@ class ComparacionExtremos(Scene):
         # ==========================================
 
         cabecera = Text(
-            "CALCULO INTERMEDIO | EID 2026",
+            "CALCULO INTERMEDIO | EID",
             font_size=23,
             color=BLUE_B,
         ).to_edge(UP, buff=0.4)
@@ -70,16 +70,16 @@ class ComparacionExtremos(Scene):
         self.play(
             Write(titulo),
             FadeIn(subtitulo),
-            run_time=2,
+            run_time=1,
         )
         self.play(
             FadeIn(grupo),
             FadeIn(integrantes),
             FadeIn(fecha),
-            run_time=2,
+            run_time=1,
         )
-        self.wait(13)
-        self.play(FadeOut(portada), run_time=2)
+        self.wait(3)
+        self.play(FadeOut(portada), run_time=1)
 
         # ==========================================
         # 2. PREGUNTA CENTRAl:
@@ -542,12 +542,12 @@ class ComparacionExtremos(Scene):
         creditos = VGroup(
             Text(
                 "CREDITOS Y FUENTES",
-                font_size=25,
+                font_size=22,
                 color=BLUE_B,
             ),
             Text(
                 "OpenStax / LibreTexts: Aproximacion de areas",
-                font_size=15,
+                font_size=9,
             ),
             Text(
                 url_libretexts,
@@ -555,7 +555,7 @@ class ComparacionExtremos(Scene):
             ),
             Text(
                 "Khan Academy: Sumas de Riemann izquierda y derecha",
-                font_size=15,
+                font_size=9,
             ),
             Text(
                 url_khan,
@@ -563,7 +563,7 @@ class ComparacionExtremos(Scene):
             ),
             Text(
                 "Manim Community: Documentacion oficial",
-                font_size=15,
+                font_size=9,
             ),
             Text(
                 url_manim,
@@ -573,7 +573,7 @@ class ComparacionExtremos(Scene):
             DOWN,
             buff=0.20,
         ).scale_to_fit_height(6.5).move_to(ORIGIN)
-                self.play(
+        self.play(
             FadeIn(creditos),
             run_time=2,
         )
