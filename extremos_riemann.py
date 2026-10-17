@@ -169,3 +169,152 @@ class ComparacionExtremos(Scene):
             FadeOut(conceptos),
             run_time=2,
         )
+
+        # ==========================================
+        # 4. GRAFICA Y EXTREMOS IZQUIERDOS
+        # ==========================================
+
+        ejes = Axes(
+            x_range=[0, 4, 1],
+            y_range=[0, 6, 1],
+            x_length=7,
+            y_length=3.6,
+            axis_config={
+                "include_numbers": True,
+                "font_size": 20,
+            },
+            tips=False,
+        ).shift(DOWN * 0.45)
+
+        etiquetas = ejes.get_axis_labels(
+            x_label=MathTex("x", font_size=27),
+            y_label=MathTex("f(x)", font_size=27),
+        )
+
+        curva = ejes.plot(
+            lambda x: x + 1,
+            x_range=[0, 4],
+            color=YELLOW,
+            stroke_width=4,
+        )
+
+        nombre_funcion = MathTex(
+            r"f(x)=x+1",
+            color=YELLOW,
+            font_size=28,
+        ).next_to(
+            ejes.c2p(3, 4),
+            UR,
+            buff=0.1,
+        )
+
+        titulo_grafica = Text(
+            "Ejemplo: f(x)=x+1 en [0,4]",
+            font_size=27,
+        ).to_edge(UP, buff=0.25)
+
+        # Funcion para crear los rectangulos
+
+        def crear_rectangulos(extremo_derecho, color):
+            rectangulos = VGroup()
+            puntos = VGroup()
+
+            for i in range(4):
+                x_izq = i
+                x_der = i + 1
+
+                if extremo_derecho:
+                    x_muestra = x_der
+                else:
+                    x_muestra = x_izq
+
+                altura = x_muestra + 1
+
+                rectangulo = Polygon(
+                    ejes.c2p(x_izq, 0),
+                    ejes.c2p(x_der, 0),
+                    ejes.c2p(x_der, altura),
+                    ejes.c2p(x_izq, altura),
+                    color=color,
+                    stroke_width=2,
+                    fill_color=color,
+                    fill_opacity=0.42,
+                )
+
+                punto = Dot(
+                    ejes.c2p(x_muestra, altura),
+                    radius=0.065,
+                    color=color,
+                )
+
+                rectangulos.add(rectangulo)
+                puntos.add(punto)
+
+            return rectangulos, puntos
+
+        # ==========================================
+        # SUMA POR EXTREMOS IZQUIERDOS
+        # ==========================================
+
+        izquierdos, puntos_izq = crear_rectangulos(
+            False,
+            BLUE,
+        )
+
+        encabezado_izq = Text(
+            "Extremos izquierdos",
+            color=BLUE,
+            font_size=27,
+        ).move_to(UP * 2.25)
+
+        puntos_texto_izq = Text(
+            "Puntos muestra: 0, 1, 2, 3",
+            color=BLUE,
+            font_size=20,
+        )
+
+        suma_izq = MathTex(
+            r"S_I=1(1+2+3+4)=10",
+            color=BLUE,
+            font_size=36,
+        ).to_edge(DOWN, buff=0.2)
+
+        puntos_texto_izq.next_to(
+            suma_izq,
+            UP,
+            buff=0.12,
+        )
+
+        self.play(
+            FadeIn(voz_francisca),
+            Write(titulo_grafica),
+            Create(ejes),
+            Write(etiquetas),
+            Create(curva),
+            run_time=3,
+        )
+
+        self.play(
+            FadeIn(izquierdos),
+            FadeIn(puntos_izq),
+            run_time=2,
+        )
+
+        self.bring_to_front(
+            ejes,
+            curva,
+            etiquetas,
+            nombre_funcion,
+            puntos_izq,
+        )
+
+        self.play(
+            Write(nombre_funcion),
+            Write(encabezado_izq),
+            Write(puntos_texto_izq),
+            Write(suma_izq),
+            run_time=2,
+        )
+
+        self.wait(45)
+       
