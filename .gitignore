@@ -2,4 +2,8 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
-media/
+media/*
+!media/audio/
+media/audio/*
+!media/audio/*.mp4
+!media/audio/*.ogg

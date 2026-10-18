@@ -33,5 +33,16 @@ de ejecutar el archivo. Renderiza la escena y abre el video al terminar.
 El video se guarda en `media/videos/extremos_riemann/720p30/ComparacionExtremos.mp4`.
 Para renderizar en baja calidad y mas rapido, cambia `-pqm` por `-pql`.
 
+## Narracion
+
+Las seis grabaciones estan en `media/audio/` y se incluyen en Git junto con el
+codigo. Al renderizar, Manim las sincroniza con sus secciones y las incorpora al
+MP4 final; no hay que agregar las voces por separado. Las grabaciones duran en
+total unos 5 minutos y 11 segundos. Con la portada y los creditos, el video
+completo dura aproximadamente 5 minutos y 38 segundos.
+
+Si reemplazas una grabacion, actualiza tambien la duracion correspondiente en
+`esperar_duracion_voz` dentro de `extremos_riemann.py`.
+
 La escena muestra la funcion `f(x) = x + 1` en `[0, 4]`, con cuatro rectangulos:
 la suma izquierda es 10, la suma derecha es 14 y el area exacta es 12.
